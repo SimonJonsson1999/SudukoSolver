@@ -2,7 +2,7 @@ import numpy as np
 import cv2 as cv
 from functions import check_if_valid, draw_sudoku
 N = 9 #size of board
-sudoku =           np.array([    [0, 0, 1, 0, 4, 0, 0, 0, 6],
+sudoku =           np.array([[0, 0, 1, 0, 4, 0, 0, 0, 6],
                         [0, 3, 5, 1, 0, 0, 0, 8, 0],
                         [0, 6, 0, 8, 0, 0, 0, 5, 7],
                         [5, 0, 0, 0, 0, 0, 0, 7, 0],
@@ -35,7 +35,9 @@ def solve_sudoku(sudoku, row, col):
 
 
 def main():
-
+    print("-----|-Start Board-|-----")
+    print("- - - - - - - - - - - - ")
+    draw_sudoku(sudoku)
     if solve_sudoku(sudoku, 0, 0):
         print("-----|-Solved Board-|-----")
         print("- - - - - - - - - - - - ")
