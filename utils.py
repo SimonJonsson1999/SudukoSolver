@@ -2,6 +2,7 @@ import numpy as np
 import torch
 from typing import Union
 import matplotlib.pyplot as plt
+import cv2 as cv
 
 
 def display_image(image: Union[torch.Tensor, np.ndarray], window_name: str = 'image') -> None:
@@ -36,7 +37,17 @@ def display_image(image: Union[torch.Tensor, np.ndarray], window_name: str = 'im
     except Exception as e:
         print(f"Error during display: {e}")
 
+def read_image(image_path: str) -> np.ndarray:
+    """
+    Read an image from the specified path.
 
+    Parameters:
+    - image_path (str): Path to the input image.
+
+    Returns:
+    - img (np.ndarray): Loaded image.
+    """
+    return cv.imread(image_path)
 
 
 def compute_image_sum(image):
