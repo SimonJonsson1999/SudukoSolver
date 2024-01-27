@@ -32,8 +32,7 @@ def solve_sudoku(sudoku, row, col):
     
         sudoku[row][col] = 0
     return False
-
-
+   
 def main():
     print("-----|-Start Board-|-----")
     print("- - - - - - - - - - - - ")
@@ -44,4 +43,6 @@ def main():
         draw_sudoku(sudoku)
     else:
         print("No solution exists!")
-main()
+if __name__ == "__main__":
+ 
+    main()

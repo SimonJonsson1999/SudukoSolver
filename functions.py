@@ -40,8 +40,5 @@ def draw_sudoku(sudoku):
                     print(str(sudoku[row][col]) + " ", end="")
     print("- - - - - - - - - - - - ")
 
-def predict(img, model):
-    prediction = model.predict(img)
-    return np.argmax(prediction)
 
     
