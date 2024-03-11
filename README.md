@@ -18,5 +18,11 @@ Here's an example of the input and output images side by side:
 |-------------|--------------|
 | ![Input Image](results/original.png) | ![Output Image](results/solved.png) |
 
+
+
+## TODO
+- Make sure the algorithm is more stable and works for all inputs.
+- Make it solve in real-time and update it with an animation.
+
 ## Credits
 This project was created by Simon Jonsson.
