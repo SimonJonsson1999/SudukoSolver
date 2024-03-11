@@ -29,9 +29,9 @@ def main():
                                 [0, 0, 0, 4, 1, 9, 0, 0, 5],
                                 [0, 0, 0, 0, 8, 0, 0, 7, 9],])
     
-    image_path = "sudoku3.jpg"
-    image_path = "sudoku.png"
-    test_image = "test.png"
+    image_path = "images/sudoku3.jpg"
+    image_path = "images/sudoku.png"
+    test_image = "images/test.png"
     image = read_image(image_path)
     print(f"image size: {image.shape}")
     board, board_corners  = get_board(image)

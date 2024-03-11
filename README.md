@@ -16,5 +16,13 @@ This project is a Sudoku solver program that automatically solves Sudoku puzzles
 ## Usage
 1. Run the program: See the notebook.
 
+## Example
+Here's an example of the input and output images side by side:
+
+| Input Image | Output Image |
+|-------------|--------------|
+| ![Input Image](results/original.png.jpg) | ![Output Image](results/solved.png.jpg) |
+
+
 ## Credits
 This project was created by Simon Jonsson. Feel free to contribute by submitting bug fixes or enhancements.
