@@ -21,7 +21,7 @@ Here's an example of the input and output images side by side:
 
 | Input Image | Output Image |
 |-------------|--------------|
-| ![Input Image](results/original.png.jpg) | ![Output Image](results/solved.png.jpg) |
+| ![Input Image](results/original.png.png) | ![Output Image](results/solved.png.png) |
 
 
 ## Credits
