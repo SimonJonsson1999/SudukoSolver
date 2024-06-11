@@ -101,18 +101,23 @@ def compute_image_sum(image):
 
 
 def overlay_board(image, original_board, solved_board, board_corners):
-    cell_width = board_corners[1, 0, 1] / 9
-    cell_height = board_corners[2, 0, 0] / 9
+    print(board_corners)
+
+    # Calculate width and height of each cell based on the board corners
+    cell_width = (board_corners[1][0] - board_corners[0][0]) / 9
+    cell_height = (board_corners[2][1] - board_corners[0][1]) / 9
+
     font = cv.FONT_HERSHEY_SIMPLEX
     font_scale = 1
     font_thickness = 2
     offset = 10
+
     for i in range(9):
         for j in range(9):
             if original_board[i, j] == 0 and solved_board[i, j] != 0:
                 # Calculate the position to draw the number in the middle of the cell
-                x = int(board_corners[0, 0, 0] + j * cell_width + cell_width / 2 - offset)
-                y = int(board_corners[0, 0, 1] + i * cell_height + cell_height / 2 + offset)
+                x = int(board_corners[0][0] + j * cell_width + cell_width / 2 - offset)
+                y = int(board_corners[0][1] + i * cell_height + cell_height / 2 + offset)
                 cv.putText(image, str(int(solved_board[i, j])), (x, y),
                            font, font_scale, (23, 111, 32), font_thickness, cv.LINE_AA)
     return image
