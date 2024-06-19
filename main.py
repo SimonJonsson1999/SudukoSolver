@@ -1,5 +1,6 @@
 import numpy as np
 import time
+import argparse
 from utils import display_image, read_image, overlay_board
 from get_sudoku import get_board
 from functions import draw_sudoku
@@ -8,7 +9,7 @@ from sudoku_solver import solve_sudoku
 
 
 
-def main():
+def main(debug=False):
     correct_board1 = np.array([[0, 0, 2, 0, 7, 0, 0, 0, 5],
                         [0, 4, 3, 9, 5, 2, 0, 0, 0],
                         [0, 0, 0, 0, 6, 0, 0, 2, 4],
@@ -31,12 +32,11 @@ def main():
     
     image_path1 = r"images\sudoku.png"
     image_path2 = r"images\sudoku2.png"
-    image_path3 = r"images\test1.jpg"
-    image = read_image(image_path3)
+    image_path3 = r"images\sudoku3.jpg"
+    image = read_image(image_path1)
     print(f"image size: {image.shape}")
-    board, board_corners  = get_board(image)
+    board, board_corners, warped_board  = get_board(image, debug)
     original_board = board.copy()
-    print(board_corners)
     print("-----|-Start Board-|-----")
     print("- - - - - - - - - - - - ")
     draw_sudoku(board)
@@ -46,11 +46,19 @@ def main():
         print("-----|-Solved Board-|-----")
         print("- - - - - - - - - - - - ")
         draw_sudoku(board)
+        print(type(image))
+        print(type(original_board))
+        print(type(board))
+        print(type(board_corners))
         overlayed_board = overlay_board(image, original_board, board, board_corners)
+        print(type(overlay_board))
         display_image(overlayed_board.transpose(2,0,1))
         print(f"Sudoku solved in {end_time - start_time:.6f} seconds")
     else:
         print("No solution exists")
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description='Sudoku Solver')
+    parser.add_argument('--debug', action='store_true', help='Enable debug mode')
+    args = parser.parse_args()
+    main(debug=args.debug)

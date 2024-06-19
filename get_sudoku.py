@@ -72,7 +72,7 @@ def preprocess_image(img: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarra
     return img_contours, warped_board, ordered_points
 
 
-def process_number_cell(cell: np.ndarray, size: Tuple = (28, 28)) -> torch.Tensor:
+def process_number_cell(cell: np.ndarray,debug, size: Tuple = (28, 28) ) -> torch.Tensor:
     """
     Process a single cell containing a number in the Sudoku board.
 
@@ -94,21 +94,22 @@ def process_number_cell(cell: np.ndarray, size: Tuple = (28, 28)) -> torch.Tenso
         print(f"Converting 3-channel image to single-channel: {cropped_number.shape}")
         cropped_number = cropped_number.squeeze()
     
-    # display_image(cropped_number.squeeze())
-    
     inverted_number = cv.bitwise_not(cropped_number)
     inverted_number[inverted_number < threshold] = 1
-    # display_image(inverted_number.squeeze())
+    if debug:
+        print("------------------")
+        display_image(inverted_number.squeeze())
     inverted_number = inverted_number[np.newaxis, :, :]
     
     t_number = transform(torch.from_numpy(inverted_number).float())
     return t_number
 
 
-def get_board(image, correct_board = None) -> None:
+def get_board(image,debug, correct_board = None, ) -> None:
     """
     Main function to execute the Sudoku board processing.
     """
+    print(f"debug: {debug}")
     softmax = nn.Softmax(dim=1)
     wrong = 0
     board = np.zeros((9, 9), dtype=int)
@@ -122,18 +123,19 @@ def get_board(image, correct_board = None) -> None:
     for i in range(9):
         for j in range(9):
             number_cell = cells[i, j, :, :, :]
-            t_number_rgb = process_number_cell(number_cell, size=(28, 28)).unsqueeze(0)
-            print(compute_image_sum(t_number_rgb[0]))
-            if compute_image_sum(t_number_rgb[0]) > 9_000:
-                output = modelcnn(t_number_rgb)
-                probabilities = softmax(output)
+            number = process_number_cell(number_cell,debug, size=(28, 28)).unsqueeze(0)
+            probabilities = modelcnn(number).softmax(dim=1)
+            if debug:
+                print(probabilities)
+            if probabilities.max().item() > 0.8:
                 predictions = probabilities.argmax(dim=1)
-                print(predictions.item())
+                if debug:
+                    print(predictions.item())
                 board[i,j] = predictions.item()
             else:
-                predictions = torch.tensor(0)
+                board[i,j] = 0
             
-    return board, original_position
+    return board, original_position, warped_board
 
     
 

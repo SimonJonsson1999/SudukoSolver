@@ -5,6 +5,9 @@ import matplotlib.pyplot as plt
 import cv2 as cv
 from IPython.display import display, Image
 
+import torch
+from torchvision import transforms, models
+from model import MNistNet
 
 
 def display_image(image: Union[torch.Tensor, np.ndarray], window_name: str = 'image') -> None:
@@ -99,11 +102,16 @@ def compute_image_sum(image):
     else:
         raise ValueError("Unsupported image type. Accepted types: np.ndarray, torch.Tensor.")
 
+def load_model(model_path):
+    backbone = models.resnet18(weights=None)  
+    model = MNistNet(backbone)
+    model.load_state_dict(torch.load(model_path))
+    model.eval() 
+    return model
+
 
 def overlay_board(image, original_board, solved_board, board_corners):
-    print(board_corners)
-
-    # Calculate width and height of each cell based on the board corners
+    # print(board_corners)
     cell_width = (board_corners[1][0] - board_corners[0][0]) / 9
     cell_height = (board_corners[2][1] - board_corners[0][1]) / 9
 
@@ -115,7 +123,6 @@ def overlay_board(image, original_board, solved_board, board_corners):
     for i in range(9):
         for j in range(9):
             if original_board[i, j] == 0 and solved_board[i, j] != 0:
-                # Calculate the position to draw the number in the middle of the cell
                 x = int(board_corners[0][0] + j * cell_width + cell_width / 2 - offset)
                 y = int(board_corners[0][1] + i * cell_height + cell_height / 2 + offset)
                 cv.putText(image, str(int(solved_board[i, j])), (x, y),

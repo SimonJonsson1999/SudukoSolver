@@ -1,7 +1,7 @@
 # Sudoku Solver
 
 ## Overview
-This project is a Sudoku solver program that automatically solves Sudoku puzzles. The program takes an iamge of an unsolved Sudoku board as input and provides the solved board as output.
+This project is a Sudoku solver program that automatically solves Sudoku puzzles. The program takes an image of an unsolved Sudoku board as input and provides the solved board as output.
 
 ## Features
 - Solves Sudoku puzzles automatically by using a digit recogniser trained on MNIST.
